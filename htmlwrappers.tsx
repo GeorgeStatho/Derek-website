@@ -25,7 +25,7 @@ export class HTMLElements {
 //const outer = new HTMLElements("div", { className: "box" },inner.toJSX());
 
 //const jsx = outer.toJSX(); // <div class="box"><span>Inner text</span></div>
-export function divWrapperElements(elements:React.ReactElement[],divprop:Record<string,unknown>,angleStep=0){
+export function divWrapperElements(elements:React.ReactElement[],divprop:Record<string,unknown>,angleStep=0):React.ReactElement[]{
   const group: React.ReactElement[] = [];
   let angle = 0;
 
@@ -47,8 +47,9 @@ export function divWrapperElements(elements:React.ReactElement[],divprop:Record<
 
 export function divWrap(
   element: React.ReactElement | React.ReactElement[],
-  style: React.CSSProperties = {}
-) {
+  props: React.HTMLAttributes<HTMLDivElement> = {}
+):React.ReactElement {
+  const { style, ...rest } = props;
   return createElement(
     "div",
     {
@@ -58,6 +59,7 @@ export function divWrap(
         justifyContent: "space-between",
         ...style,
       },
+      ...rest,
     },
     element
   );
