@@ -120,6 +120,36 @@ html, body, #root {
     transform: scaleX(-1);
     transform-origin: center;
 }
+
+@media (max-width: 768px) {
+  .page{
+    --circle-col-width: 90px;
+    --circle-col-gap: 16px;
+  }
+
+  .title-text{
+    font-size: 48px;
+  }
+
+  .circle-row{
+    padding: 12px 8px;
+  }
+
+  .circle-col{
+    gap: 12px;
+  }
+
+  .circle-item{
+    width: var(--circle-col-width);
+  }
+
+  .footer{
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    max-width: none;
+  }
+}
 /*circle column styles*/
 .left-circle-col{
     align-self: flex-end;
