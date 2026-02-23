@@ -144,10 +144,18 @@ html, body, #root {
   }
 
   .footer{
-    left: 16px;
-    right: 16px;
+    left: 24px;
+    right: 24px;
     bottom: 16px;
     max-width: none;
+  }
+
+  .title-wrap{
+    padding-top: 24px;
+  }
+
+  .page{
+    padding: 0 24px;
   }
 }
 /*circle column styles*/
