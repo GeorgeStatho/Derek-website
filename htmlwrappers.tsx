@@ -30,15 +30,13 @@ export function divWrapperElements(elements:React.ReactElement[],divprop:Record<
   let angle = 0;
 
   for (const element of elements) {
-    const propsWithRotation = {
-      ...divprop,
-      style: {
-        ...(divprop.style as Record<string, unknown>),
-        transform: `rotate(${angle}deg)`,
-      },
-    };
+    const inner = createElement(
+      "div",
+      { className: "circle-rot", style: { transform: `rotate(${angle}deg)` } },
+      element
+    );
 
-    group.push(new HTMLElements("div", propsWithRotation, element).toJSX());
+    group.push(new HTMLElements("div", divprop, inner).toJSX());
     angle += angleStep;
   }
   return group
