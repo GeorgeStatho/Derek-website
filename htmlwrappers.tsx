@@ -110,10 +110,12 @@ function heading(text: string) {
 }
 
 
-export function Title(text:string) {
+export function Title(text:string, fontFamily?: string) {
   return (
     <div className="title-wrap">
-      <h1 className="title-text">{text}</h1>
+      <h1 className="title-text" style={fontFamily ? { fontFamily } : undefined}>
+        {text}
+      </h1>
     </div>
   );
 }

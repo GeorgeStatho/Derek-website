@@ -71,8 +71,8 @@ export const innershadowdefs = new HTMLElements("defs", {}, [
 function heading(text) {
     return (_jsx("h1", { className: "page-title", children: text }));
 }
-export function Title(text) {
-    return (_jsx("div", { className: "title-wrap", children: _jsx("h1", { className: "title-text", children: text }) }));
+export function Title(text, fontFamily) {
+    return (_jsx("div", { className: "title-wrap", children: _jsx("h1", { className: "title-text", style: fontFamily ? { fontFamily } : undefined, children: text }) }));
 }
 function ParagraphTitle({ text }) {
     return _jsx("p", { className: "name-title", children: text });

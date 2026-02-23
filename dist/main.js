@@ -31,4 +31,4 @@ const rightCircles = divWrapperElements(svgColumn, { className: "circle-item rig
 const root = createRoot(document.getElementById("root"));
 root.render(createElement("div", {
     className: "page",
-}, Title("The Dk Page"), Footer("Derek Cardenas", "Aspiring mechanical engineering student at Vaughn College of Aeronautics and Technology. Studying in 3D design and modeling.", "https://www.instagram.com/derek46631?igsh=dmYwMWpsZzJ0cWpn", "https://www.linkedin.com/in/derek-cardenas-baa004261/"), createElement("div", { className: "circle-row" }, divWrap(leftCircles, { className: "circle-col left-col" }), divWrap(rightCircles, { className: "circle-col right-col" }))));
+}, Title("The Dk Page", '"Jersey 25", sans-serif'), Footer("Derek Cardenas", "Aspiring mechanical engineering student at Vaughn College of Aeronautics and Technology. Studying in 3D design and modeling.", "https://www.instagram.com/derek46631?igsh=dmYwMWpsZzJ0cWpn", "https://www.linkedin.com/in/derek-cardenas-baa004261/"), createElement("div", { className: "circle-row" }, divWrap(leftCircles, { className: "circle-col left-col" }), divWrap(rightCircles, { className: "circle-col right-col" }))));

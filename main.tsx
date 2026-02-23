@@ -1,6 +1,6 @@
 import React, { createElement, JSX } from "react"
 import { createRoot } from "react-dom/client";
-import { HTMLElements, divWrapperElements, divWrap,innershadowdefs, Footer, Title } from "./htmlwrappers.js";
+import { HTMLElements, divWrapperElements, divWrap,innershadowdefs, Footer, Title} from "./htmlwrappers.js";
 
 //circle functions
 function createCircRect(x:number,y:number){
@@ -49,7 +49,7 @@ root.render(
     "div",
     {
       className: "page",
-    },Title("The Dk Page"),
+    },Title("The Dk Page", '"Jersey 25", sans-serif'),
     Footer("Derek Cardenas","Aspiring mechanical engineering student at Vaughn College of Aeronautics and Technology. Studying in 3D design and modeling.","https://www.instagram.com/derek46631?igsh=dmYwMWpsZzJ0cWpn","https://www.linkedin.com/in/derek-cardenas-baa004261/"),
     createElement(
       "div",
