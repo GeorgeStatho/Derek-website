@@ -127,6 +127,14 @@ html, body, #root {
     transform-origin: center;
 }
 
+.left-col .circle-item{
+    transform-origin: left center;
+}
+
+.right-col .circle-item{
+    transform-origin: right center;
+}
+
 @media (max-width: 768px) {
   .page{
     --circle-col-width: 60px;

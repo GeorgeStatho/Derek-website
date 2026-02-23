@@ -35,7 +35,6 @@ export function divWrapperElements(elements:React.ReactElement[],divprop:Record<
       style: {
         ...(divprop.style as Record<string, unknown>),
         transform: `rotate(${angle}deg)`,
-        transformOrigin: "center",
       },
     };
 

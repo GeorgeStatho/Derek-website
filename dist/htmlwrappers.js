@@ -23,7 +23,6 @@ export function divWrapperElements(elements, divprop, angleStep = 0) {
             style: {
                 ...divprop.style,
                 transform: `rotate(${angle}deg)`,
-                transformOrigin: "center",
             },
         };
         group.push(new HTMLElements("div", propsWithRotation, element).toJSX());
