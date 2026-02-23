@@ -15,7 +15,7 @@ function createCircRectCol(x, y, count) {
     let svgElement;
     for (let i = 0; i < count; i++) {
         svgElement =
-            new HTMLElements("svg", { width: 200, height: 114 }, [innershadowdefs.toJSX(), createCircRect(x, y)]).toJSX();
+            new HTMLElements("svg", { width: 127, height: 114, viewBox: "0 0 127 114" }, [innershadowdefs.toJSX(), createCircRect(x, y)]).toJSX();
         svgs.push(svgElement);
     }
     return svgs;

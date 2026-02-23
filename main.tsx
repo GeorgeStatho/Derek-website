@@ -18,7 +18,9 @@ function createCircRectCol(x: number, y: number, count: number): React.ReactElem
     svgElement=
       new HTMLElements(
         "svg",
-        { width: 200, height: 114 },[innershadowdefs.toJSX(), createCircRect(x, y)]).toJSX();
+        { width: 127, height: 114, viewBox: "0 0 127 114" },
+        [innershadowdefs.toJSX(), createCircRect(x, y)]
+      ).toJSX();
 
       svgs.push(svgElement);
   }
