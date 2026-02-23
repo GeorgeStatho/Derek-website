@@ -140,14 +140,63 @@ html, body, #root {
     gap: 24px;
     justify-content: space-between;
     width: 100%;
-    padding: 0 var(--circle-col-gap);
+    padding: 0 calc(var(--circle-col-gap) + 20px);
 }
 
 .image-item{
-    width: 200px;
-    height: auto;
-    display: block;
+    width: 100%;
+    height: 260px;
+    object-fit: contain;
 }
+
+.image-card{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  text-align: left;
+  width: calc((100% - 24px) / 2);
+}
+
+.image-caption{
+    font-family: "Jersey 25", "Inter", sans-serif;
+  font-size: 24px;
+  color: #c93f3f;
+  margin: 0;
+  margin-top: 8px;
+  max-width: 200px;
+}
+
+.left-circle-col{
+    align-self: flex-end;
+}
+
+.right-circle-col{
+    align-self: flex-end;
+}
+
+/*Social Media Icon styles*/
+.socials {
+  display: flex;
+  gap: 8px;
+  color: #888; /* icon color */
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+}
+
+
+.jersey-25-regular {
+  font-family: "Jersey 25", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* removed duplicate image-grid override */
+
+
 
 .left-col .circle-item{
     transform-origin: left center;
@@ -186,9 +235,7 @@ html, body, #root {
     padding: 0 var(--circle-col-gap);
   }
 
-  .image-item{
-    width: 140px;
-  }
+  
 
   .footer{
     left: calc(var(--circle-col-width) + var(--circle-col-gap));
@@ -202,47 +249,4 @@ html, body, #root {
   }
 }
 /*circle column styles*/
-.left-circle-col{
-    align-self: flex-end;
-}
 
-.right-circle-col{
-    align-self: flex-end;
-}
-
-/* remove duplicate title styles below */
-
-/*Social Media Icon styles*/
-.socials {
-  display: flex;
-  gap: 8px;
-  color: #888; /* icon color */
-}
-
-.icon {
-  width: 24px;
-  height: 24px;
-}
-
-
-.jersey-25-regular {
-  font-family: "Jersey 25", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
-
-.image-card{
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-  text-align: left;
-}
-
-.image-caption{
-  font-size: 14px;
-  color: #ddd;
-  margin: 0;
-  max-width: 200px;
-}

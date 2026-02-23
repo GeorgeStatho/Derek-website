@@ -44,7 +44,10 @@ const rightCircles = divWrapperElements(
 //end creating circles
 
 //images creating
-const images = [{src: "./assets/derek.jpg", caption:"The man himself"}];
+const images = [{src: "./assets/derek.jpg", caption:"The man himself"},
+  {src:"assets/derek2.jpg",caption: "Derek Today"},
+  {src:"assets/gun.jpg",caption: "One of his inventions"}
+];
 const imageItems = images.map((img) =>
   createElement(
     "div",
@@ -76,6 +79,7 @@ root.render(
         createElement("div", { className: "image-grid" }, imageItems)
       ),
       divWrap(rightCircles, { className: "circle-col right-col" }),
+      
     )
   )
 );

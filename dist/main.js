@@ -29,7 +29,10 @@ let leftCircles = divWrapperElements(svgColumn, {
 const rightCircles = divWrapperElements(svgColumn, { className: "circle-item right-circle-col" }, 45);
 //end creating circles
 //images creating
-const images = [{ src: "./assets/derek.jpg", caption: "The man himself" }];
+const images = [{ src: "./assets/derek.jpg", caption: "The man himself" },
+    { src: "assets/derek2.jpg", caption: "Derek Today" },
+    { src: "assets/gun.jpg", caption: "One of his inventions" }
+];
 const imageItems = images.map((img) => createElement("div", { className: "image-card" }, CreateImage(img.src, "image-item"), createElement("p", { className: "image-caption" }, img.caption)));
 //end images creation
 //rendering
