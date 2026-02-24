@@ -6,14 +6,26 @@
   width: 120px;
   color: white;
   animation: fly-up 6s linear infinite;
+  pointer-events: auto;
+  z-index: 5; /* above overlays */
 }
 
-.wing1{
-    color: "white";
-    position: absolute;
-    left: 50%;
-    bottom: -120px;  
-    width: 120px;
+.plane .stream{
+  transform-box: fill-box;
+  transform-origin: center bottom; /* or center bottom */
+  animation: stream-pulse 1.2s ease-in-out infinite;
+}
+
+.plane.dragging{
+  animation: none;
+  cursor: grabbing;
+}
+
+
+@keyframes stream-pulse {
+  0%   { transform: scaleY(0.2); }
+  50%  { transform: scaleY(1); }
+  100% { transform: scaleY(0.2); }
 }
 
 @keyframes fly-up {
@@ -21,6 +33,7 @@
   to   { transform: translateX(-50%) translateY(-120vh); }
 }
 
-@keyframes grow-up-down{
-    
-}
+
+.plane .stream:nth-of-type(1){ animation-delay: 0s; }
+.plane .stream:nth-of-type(2){ animation-delay: 0.15s; }
+.plane .stream:nth-of-type(3){ animation-delay: 0.3s; }
