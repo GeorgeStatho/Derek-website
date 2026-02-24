@@ -3,6 +3,7 @@ import { HTMLElements, divWrapperElements, innershadowdefs } from "./htmlwrapper
 
 function createCircRect(x: number, y: number) {
   const group: React.ReactElement[] = [];
+  //rect object
   let shape = new HTMLElements("rect", {
     fill: "var(--fill-0, #D9D9D9)",
     height: 19,
@@ -11,6 +12,7 @@ function createCircRect(x: number, y: number) {
     y: y - 10,
   });
   group.push(shape.toJSX());
+  //circle object
   shape = new HTMLElements("ellipse", {
     cx: x,
     cy: y,
@@ -50,12 +52,15 @@ function withRotation(elements: React.ReactElement[], angleStep: number) {
 }
 
 export function buildCircleColumns() {
+  //builds column by wrapping array of svg in div wrapper
   const svgColumn = createCircRectCol(66, 53.5, 6);
 
+  //creates left side circles
   const leftCircles = divWrapperElements(withRotation(svgColumn, 45), {
     className: "circle-item left-circle-col",
   });
 
+  //creates right side circles
   const rightCircles = divWrapperElements(withRotation(svgColumn, 45), {
     className: "circle-item right-circle-col",
   });
