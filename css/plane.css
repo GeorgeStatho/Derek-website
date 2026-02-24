@@ -1,19 +1,45 @@
 .plane {
-
-    position: absolute;
+  position: absolute;
   left: 50%;
-  bottom: -120px;  
+  bottom: -120px;
   width: 120px;
   color: white;
+
+  /* default animation before any drag */
   animation: fly-up 6s linear infinite;
-  pointer-events: auto;
-  z-index: 5; /* above overlays */
-  cursor: grab;
-  touch-action: none; /* prevents browser gestures from stealing pointer events */
-  user-select: none;
   transform: translateX(-50%);
+
+  pointer-events: auto;
+  z-index: 5;
+
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
 }
 
+/* default path: start below page and fly upward */
+@keyframes fly-up {
+  from {
+    bottom: -120px;
+  }
+  to {
+    bottom: 100%;
+  }
+}
+
+/* while dragging: JS controls left/top */
+/* while dragging: JS controls left/top */
+.plane.dragging {
+  cursor: grabbing;
+  animation: none !important;
+  transform: none !important;
+}
+
+/* after drag release: keep current left/top and drift upward from there */
+.plane.plane-resume {
+  animation: plane-drift-up 6s linear infinite !important;
+  
+}
 
 .plane .stream{
   transform-box: fill-box;
@@ -21,22 +47,20 @@
   animation: stream-pulse 1.2s ease-in-out infinite;
 }
 
-.plane.dragging{
-  cursor: grabbing;
-}
-
-
 @keyframes stream-pulse {
   0%   { transform: scaleY(0.2); }
   50%  { transform: scaleY(1); }
   100% { transform: scaleY(0.2); }
 }
 
-@keyframes fly-up {
-  from { transform: translateX(-50%) translateY(0); }
-  to   { transform: translateX(-50%) translateY(-120vh); }
+@keyframes plane-drift-up {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-120vh);
+  }
 }
-
 
 .plane .stream:nth-of-type(1){ animation-delay: 0s; }
 .plane .stream:nth-of-type(2){ animation-delay: 0.15s; }
