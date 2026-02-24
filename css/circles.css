@@ -12,12 +12,14 @@
 
 .left-col{
     align-items: flex-start;
+    margin-left: -100px;
 }
 
 .right-col{
     align-items: flex-end;
     transform: scaleX(-1);
     transform-origin: center;
+    margin-right: -100px; 
 }
 
 .left-col .circle-item{

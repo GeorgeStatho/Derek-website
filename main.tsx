@@ -6,6 +6,25 @@ import { HTMLElements, divWrapperElements, divWrap,innershadowdefs, Footer, Titl
 
 const DESIGN_WIDTH = 1920;
 const DESIGN_HEIGHT = 1080;
+
+let planePosNorm: { x: number; y: number } | null = null;
+
+function applyPlaneNormalizedPosition(plane: HTMLElement) {
+  if (!planePosNorm) return;
+
+  const x = planePosNorm.x * DESIGN_WIDTH;
+  const y = planePosNorm.y * DESIGN_HEIGHT;
+
+  plane.style.left = `${x}px`;
+  plane.style.top = `${y}px`;
+  plane.style.right = "auto";
+  plane.style.bottom = "auto";
+}
+
+
+
+
+
 //circle functions
 function createCircRect(x:number,y:number){
     let group=[];
@@ -59,13 +78,22 @@ const rightCircles = divWrapperElements(
 
 
 function Plane() {
+  const planeRef = useRef<SVGSVGElement | null>(null);
+
+  useEffect(() => {
+    const plane = planeRef.current;
+    if (!plane) return;
+
+    setupPlaneDrag(plane as unknown as HTMLElement);
+  }, []);
   return (
     <svg
+      ref={planeRef}
       className="plane"
       viewBox="0 0 576 384"
       aria-label="Plane"
       role="img"
-    >
+      >
       <path
         fill="currentColor"
         opacity="1"
@@ -105,7 +133,7 @@ function Plane() {
   );
 }
 
-function useAutoFitPage(pageRef: RefObject<HTMLElement | null>) {
+function useAutoFitPage(pageRef: React.RefObject<HTMLElement | null>) {
   useEffect(() => {
     const fitPage = () => {
       const page = pageRef.current;
@@ -120,6 +148,12 @@ function useAutoFitPage(pageRef: RefObject<HTMLElement | null>) {
 
       page.style.setProperty("--scale", String(scale));
       page.style.transformOrigin = "center center";
+
+      // If the plane has been manually dragged, re-apply its normalized position
+      const plane = page.querySelector(".plane") as HTMLElement | null;
+      if (plane) {
+        applyPlaneNormalizedPosition(plane);
+      }
     };
 
     fitPage();
@@ -237,62 +271,111 @@ window.addEventListener("load", () => {
   setTimeout(startRandomCircleRotation, 0);
 });
 
-function fitPage() {
-  const page = document.querySelector('.page') as HTMLElement | null;
-  if (!page) return;
-
-  const scaleX = window.innerWidth / 1920;
-  const scaleY = window.innerHeight / 1080;
-  const scale = Math.min(scaleX, scaleY);
-
-  page.style.setProperty('--scale', String(scale));
-}
 
 
 
 function setupPlaneDrag(plane: HTMLElement) {
   let dragging = false;
-  let offsetX = 0;
-  let offsetY = 0;
 
-  plane.addEventListener("pointerdown", (e) => {
+  // offsets stored in DESIGN-space coords (not screen px)
+  let offsetXDesign = 0;
+  let offsetYDesign = 0;
+
+  const getPageScale = (page: HTMLElement) => {
+    const pageRect = page.getBoundingClientRect();
+    const scaleX = pageRect.width / DESIGN_WIDTH;
+    const scaleY = pageRect.height / DESIGN_HEIGHT;
+    return Math.min(scaleX, scaleY) || 1;
+  };
+
+  const onPointerMove = (e: PointerEvent) => {
+    if (!dragging) return;
+
+    const page = plane.closest(".page") as HTMLElement | null;
+    if (!page) return;
+
+    const pageRect = page.getBoundingClientRect();
+    const scale = getPageScale(page);
+
+    // pointer in DESIGN coords
+    const pointerX = (e.clientX - pageRect.left) / scale;
+    const pointerY = (e.clientY - pageRect.top) / scale;
+
+    const left = pointerX - offsetXDesign;
+    const top = pointerY - offsetYDesign;
+
+    plane.style.left = `${left}px`;
+    plane.style.top = `${top}px`;
+    plane.style.right = "auto";
+    plane.style.bottom = "auto";
+
+    // Optional if you're using normalized resize persistence
+    planePosNorm = {
+      x: left / DESIGN_WIDTH,
+      y: top / DESIGN_HEIGHT,
+    };
+  };
+
+  const onPointerUp = () => {
+    if (!dragging) return;
+    dragging = false;
+    plane.classList.remove("dragging");
+
+    window.removeEventListener("pointermove", onPointerMove);
+    window.removeEventListener("pointerup", onPointerUp);
+    window.removeEventListener("pointercancel", onPointerUp);
+
+    // Resume your CSS animation path after release
+    plane.style.animation = "";
+    plane.style.transform = "";
+  };
+
+  plane.addEventListener("pointerdown", (e: PointerEvent) => {
+    e.preventDefault();
+
+    const page = plane.closest(".page") as HTMLElement | null;
+    if (!page) return;
+
+    const pageRect = page.getBoundingClientRect();
+    const planeRect = plane.getBoundingClientRect();
+    const scale = getPageScale(page);
+
+    // Freeze current *visual* position into DESIGN coords
+    const currentLeft = (planeRect.left - pageRect.left) / scale;
+    const currentTop = (planeRect.top - pageRect.top) / scale;
+
+    // Pointer position in DESIGN coords
+    const pointerX = (e.clientX - pageRect.left) / scale;
+    const pointerY = (e.clientY - pageRect.top) / scale;
+
+    // Store offset in the SAME coordinate space used during move
+    offsetXDesign = pointerX - currentLeft;
+    offsetYDesign = pointerY - currentTop;
+
+    // Disable animation/transform while dragging
+    plane.style.animation = "none";
+    plane.style.transform = "none";
+
+    // Freeze into left/top at current visual spot (no teleport)
+    plane.style.left = `${currentLeft}px`;
+    plane.style.top = `${currentTop}px`;
+    plane.style.right = "auto";
+    plane.style.bottom = "auto";
+
     dragging = true;
     plane.classList.add("dragging");
-    plane.setPointerCapture(e.pointerId);
-    const rect = plane.getBoundingClientRect();
-    offsetX = e.clientX - rect.left;
-    offsetY = e.clientY - rect.top;
-  });
 
-  plane.addEventListener("pointermove", (e) => {
-    if (!dragging) return;
-    plane.style.left = `${e.clientX - offsetX}px`;
-    plane.style.top = `${e.clientY - offsetY}px`;
-    plane.style.bottom = "auto";
-  });
-
-  plane.addEventListener("pointerup", (e) => {
-    dragging = false;
-    plane.releasePointerCapture(e.pointerId);
+    window.addEventListener("pointermove", onPointerMove);
+    window.addEventListener("pointerup", onPointerUp);
+    window.addEventListener("pointercancel", onPointerUp);
   });
 }
-
-const plane = document.querySelector<HTMLElement>(".plane");
-if (plane) {
-  setupPlaneDrag(plane);
-}
-
-function updatePageScale() {
-  const page = document.querySelector<HTMLElement>(".page");
-  if (!page) return;
-  const scale = window.innerWidth / 1920;
-  page.style.setProperty("--scale", String(scale));
-}
+  console.log("[plane] setupPlaneDrag attached");
 
 
 
-window.addEventListener('resize', fitPage);
-window.addEventListener('load', fitPage);
-fitPage();
-window.addEventListener("resize", updatePageScale);
-updatePageScale();
+
+
+
+
+

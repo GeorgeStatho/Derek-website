@@ -5,10 +5,135 @@
     justify-content: space-between;
     align-items: stretch;
     z-index: 1;
+    padding-left: 0px;
+    padding-right: 0px;
 }
 
 @media (max-width: 768px) {
   .circle-row{
     padding: 96px 0 0;
+  }
+}
+
+/* ===== Responsive fallback for narrow / portrait windows ===== */
+@media (max-width: 900px), (max-aspect-ratio: 4/5) {
+  /* Let the viewport scroll instead of clipping */
+  .page-wrap {
+    min-height: 100vh;
+    height: auto;
+    overflow: auto;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 12px 0;
+  }
+
+  /* Disable fixed-canvas scaling mode on narrow screens */
+  .page {
+    width: 100% !important;
+    max-width: 100%;
+    height: auto !important;
+    min-height: 100vh;
+    transform: none !important;
+    transform-origin: top center !important;
+
+    /* stack content vertically */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    padding: 12px 12px 20px;
+    box-sizing: border-box;
+  }
+
+  /* Main middle row becomes a single-column stack */
+  .circle-row {
+    width: 100%;
+    height: auto !important;
+    display: grid !important;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    align-items: start;
+    gap: 10px;
+    padding: 0 !important;
+  }
+
+  /* Hide decorative side circles on mobile/narrow layouts */
+  .left-col,
+  .right-col {
+    display: none !important;
+    margin: 0 !important;
+  }
+
+  /* Image section scales to viewport */
+  .image-col {
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .image-grid {
+    width: 100%;
+    max-width: 420px;
+    display: grid !important;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    justify-items: center;
+    align-items: start;
+  }
+
+  /* Make images fit smaller screens */
+  .image-grid img,
+  .image-col img {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  /* Tone down / remove decorative plane on small screens */
+  .plane {
+    display: none !important;
+  }
+
+  /* If title wrapper is absolutely positioned, put it back in flow */
+  .title-wrap {
+    position: static !important;
+    inset: auto !important;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 4px 0 8px;
+    text-align: center;
+  }
+
+  /* If footer is absolutely positioned, put it back in flow */
+  .footer {
+    position: static !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 100%;
+    max-width: 420px;
+    margin: 8px auto 0;
+    text-align: center;
+  }
+}
+
+/* Optional: extra-tight phones */
+@media (max-width: 520px) {
+  .page {
+    padding: 8px 8px 16px;
+    gap: 8px;
+  }
+
+  .image-col,
+  .image-grid,
+  .footer {
+    max-width: 340px;
+  }
+
+  .title-wrap {
+    margin-bottom: 4px;
   }
 }

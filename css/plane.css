@@ -8,7 +8,12 @@
   animation: fly-up 6s linear infinite;
   pointer-events: auto;
   z-index: 5; /* above overlays */
+  cursor: grab;
+  touch-action: none; /* prevents browser gestures from stealing pointer events */
+  user-select: none;
+  transform: translateX(-50%);
 }
+
 
 .plane .stream{
   transform-box: fill-box;
@@ -17,7 +22,6 @@
 }
 
 .plane.dragging{
-  animation: none;
   cursor: grabbing;
 }
 
