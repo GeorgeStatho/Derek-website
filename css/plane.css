@@ -1,0 +1,26 @@
+.plane {
+
+    position: absolute;
+  left: 50%;
+  bottom: -120px;  
+  width: 120px;
+  color: white;
+  animation: fly-up 6s linear infinite;
+}
+
+.wing1{
+    color: "white";
+    position: absolute;
+    left: 50%;
+    bottom: -120px;  
+    width: 120px;
+}
+
+@keyframes fly-up {
+  from { transform: translateX(-50%) translateY(0); }
+  to   { transform: translateX(-50%) translateY(-120vh); }
+}
+
+@keyframes grow-up-down{
+    
+}
